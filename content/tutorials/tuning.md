@@ -36,6 +36,8 @@ Boot up the car and `ssh` into it.
 
 For every value, give a ballpark region for the value to be in, so they know if they are on the right track.
 
+Tune the car at the speed you plan to drive it at. This will allow you to get more acurate gains at that speed (as the gains may not scale linearly with speed (although we make this assumption)).
+
 ## Steering Angle Offset
 
 Give an introduction on what this parameter is.
@@ -83,6 +85,21 @@ A good stopping criteria is when the reported distance is within 2-3 inches (0.0
 
 ## Steering Angle Gain
 
-Introduction
+Introduction to the parameter
+
+Get a picture of the kinematic car model, and show how when the steering angle is at 0.34, the turning radius of the car will be a function of the speed. From this, the diameter of the turn can be computed, we'll want to make sure our car actually travels this diameter
 
 ### How to Tune
+
+psuedocode:
+```
+extend tape measure to around 3-4 ft on the floor.
+
+while not tuned:
+    place car perpendicular (see picture) to the tape measure with the back wheelbase lined up with the tape measure (refer to picture).
+    start teleop
+    command the max steering angle to whichever side the tape measure is on, drive the car forward until the back wheelbase intersects with the tape measure.
+    record the distance traveled. (if your tape measure is in inches, convert to meters)
+    compare to output of the rostopic echo command. If the actual distance is larger than it should be, decrease the gain. If the actual distance is larger than it should beincrease the gain.
+    stop teleop
+```
